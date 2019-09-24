@@ -19,6 +19,7 @@ import java.util.List;
                 "com.alexey.dao",
                 "com.alexey.service"})
 @Import(JdbcConfiguration.class)
+//aaaaaaaaaaaaaaaa
 public class AppConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean
