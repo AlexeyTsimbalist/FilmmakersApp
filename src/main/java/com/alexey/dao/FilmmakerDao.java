@@ -12,5 +12,5 @@ public interface FilmmakerDao {
     Long insertFilmmaker(Filmmaker filmmaker) throws DataAccessException;
     void updateFilmmaker(Filmmaker filmmaker) throws DataAccessException;
     Long deleteFilmmaker(Long id) throws DataAccessException;
-    List<Movie> getHisMovies(Long id) throws DataAccessException;
+   // List<Movie> getHisMovies(Long id) throws DataAccessException;
 }

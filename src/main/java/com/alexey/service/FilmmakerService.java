@@ -11,5 +11,5 @@ public interface FilmmakerService {
     Long addFilmmaker(Filmmaker filmmaker);
     void updateFilmmaker(Filmmaker filmmaker);
     Long removeFilmmaker(Long id);
-    List<Movie> getHisMovies(Long id);
+    //List<Movie> getHisMovies(Long id);
 }

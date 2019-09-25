@@ -1,10 +1,8 @@
 package com.alexey.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.beans.factory.annotation.Value;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.beans.Transient;
 import java.util.Date;
 import java.util.List;
 
@@ -16,20 +14,33 @@ public class Filmmaker {
     private String country;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone="Europe/Moscow")
     private Date dateOfBirth;
-    private List<Movie> movies = new ArrayList<>();
-    private int count;
+    private Integer countOfMovies;
+    private List<Movie> movies;
 
     public Filmmaker() {}
 
-    public Filmmaker(Long id, String firstName, String lastName, String country, Date dateOfBirth/*, List<Movie> movies*/){
+
+    //for getById()
+    public Filmmaker(Long id, String firstName, String lastName, String country, Date dateOfBirth,Integer countOfMovies, List<Movie> movies){
         this.id=id;
         this.firstName=firstName;
         this.lastName=lastName;
         this.country=country;
         this.dateOfBirth=dateOfBirth;
-        //this.movies=movies;
+        this.countOfMovies=countOfMovies;
+        this.movies=movies;
     }
+    //for getAll()
+    public Filmmaker(Long id, String firstName, String lastName, String country, Date dateOfBirth, Integer countOfMovies){
+        this.id=id;
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.country=country;
+        this.dateOfBirth=dateOfBirth;
+        this.countOfMovies=countOfMovies;
 
+    }
+    //for insert()
     public Filmmaker(String firstName, String lastName, String country, Date dateOfBirth){
         this.firstName=firstName;
         this.lastName=lastName;
@@ -91,12 +102,12 @@ public class Filmmaker {
         this.movies = movies;
     }
 
-    public int getCount() {
-        return count;
+    public Integer getCountOfMovies() {
+        return countOfMovies;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setCountOfMovies(Integer countOfMovies) {
+        this.countOfMovies = countOfMovies;
     }
 
     @Override

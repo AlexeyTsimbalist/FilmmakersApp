@@ -21,18 +21,12 @@ public class FilmmakerServiceImpl implements FilmmakerService{
     @Override
     public List<Filmmaker> getAll() {
         List<Filmmaker> filmmakerList = filmmakerDao.getAll();
-        for (Filmmaker filmmaker : filmmakerList) {
-            filmmaker.setMovies(filmmakerDao.getHisMovies(filmmaker.getId()));
-            filmmaker.setCount(filmmaker.getMovies().size());
-        }
         return filmmakerList;
     }
 
     @Override
     public Filmmaker getById(Long id) {
         Filmmaker filmmaker = filmmakerDao.getById(id);
-        filmmaker.setMovies(filmmakerDao.getHisMovies(id));
-        filmmaker.setCount(filmmaker.getMovies().size());
         return filmmaker;
     }
 
@@ -52,8 +46,8 @@ public class FilmmakerServiceImpl implements FilmmakerService{
         return filmmakerDao.deleteFilmmaker(id);
     }
 
-    @Override
+    /*@Override
     public List<Movie> getHisMovies(Long id) {
         return filmmakerDao.getHisMovies(id);
-    }
+    }*/
 }

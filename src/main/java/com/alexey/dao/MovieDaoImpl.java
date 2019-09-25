@@ -49,7 +49,9 @@ public class MovieDaoImpl implements MovieDao {
             resultSet.getLong("id"),
             resultSet.getString("name"),
             resultSet.getDate("year"),
-            resultSet.getInt("duration")
+            resultSet.getInt("duration"),
+            resultSet.getLong("filmmaker_id"),
+            resultSet.getString("first_name")+" "+resultSet.getString("last_name")
     ));
 
 

@@ -1,5 +1,6 @@
 package com.alexey.model;
 
+import com.alexey.dto.FilmmakerDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
@@ -10,12 +11,24 @@ public class Movie {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy", timezone="Europe/Moscow")
     private Date year;
     private Integer duration;
+    private FilmmakerDto filmmaker;
 
-    public Movie(Long id, String name, Date year, Integer duration){
+    //When we get from DB
+    public Movie(Long id, String name, Date year, Integer duration,Long filmmakerId, String filmmaker){
         this.id=id;
         this.name=name;
         this.year=year;
         this.duration=duration;
+        this.filmmaker=new FilmmakerDto(filmmakerId, filmmaker);
+    }
+
+    //When we create from request
+    public Movie(String name, Date year, Integer duration, Long filmmakerId){
+        this.name=name;
+        this.year=year;
+        this.duration=duration;
+        new FilmmakerDto(filmmakerId);
+
     }
 
     public Long getId() {
@@ -50,6 +63,13 @@ public class Movie {
         this.duration = duration;
     }
 
+    public FilmmakerDto getFilmmaker() {
+        return filmmaker;
+    }
+
+    public void setFilmmaker(FilmmakerDto filmmaker) {
+        this.filmmaker = filmmaker;
+    }
 
     @Override
     public String toString() {
