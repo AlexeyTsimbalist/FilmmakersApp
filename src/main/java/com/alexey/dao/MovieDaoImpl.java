@@ -1,15 +1,12 @@
 package com.alexey.dao;
 
-import com.alexey.model.Filmmaker;
 import com.alexey.model.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -46,11 +43,11 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     private RowMapper<Movie> movieRowMapper = ((resultSet, i) -> new Movie(
-            resultSet.getLong("id"),
+            resultSet.getInt("id"),
             resultSet.getString("name"),
-            resultSet.getDate("year"),
+            resultSet.getDate("release_date"),
             resultSet.getInt("duration"),
-            resultSet.getLong("filmmaker_id"),
+            resultSet.getInt("filmmaker_id"),
             resultSet.getString("filmmaker_name")
     ));
 
@@ -61,25 +58,25 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public Movie getById(Long id) throws DataAccessException{
+    public Movie getById(Integer id) throws DataAccessException{
         return namedParameterJdbcTemplate.queryForObject(findByIdQuery,new MapSqlParameterSource("id",id),movieRowMapper);
     }
 
     @Override
-    public List<Movie> getMoviesByFilmmaker(Long id) throws DataAccessException {
+    public List<Movie> getMoviesByFilmmaker(Integer id) throws DataAccessException {
         return namedParameterJdbcTemplate.query(findMoviesByFilmmakerQuery, new MapSqlParameterSource("id",id), movieRowMapper);
     }
 
     @Override
-    public Long insertMovie(Movie movie) throws DataAccessException{
+    public Integer insertMovie(Movie movie) throws DataAccessException{
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
         namedParameter.addValue("name", movie.getName());
-        namedParameter.addValue("year", movie.getYear());
+        namedParameter.addValue("releaseDate", movie.getReleaseDate());
         namedParameter.addValue("duration", movie.getDuration());
         namedParameter.addValue("filmmakerId", movie.getFilmmaker().getId());
         namedParameterJdbcTemplate.update(insertQuery, namedParameter, keyHolder, new String[] {"id"});
-        return keyHolder.getKey().longValue();
+        return keyHolder.getKey().intValue();
     }
 
     @Override
@@ -87,14 +84,14 @@ public class MovieDaoImpl implements MovieDao {
         MapSqlParameterSource namedParameter = new MapSqlParameterSource();
         namedParameter.addValue("id", movie.getId());
         namedParameter.addValue("name", movie.getName());
-        namedParameter.addValue("year", movie.getYear());
+        namedParameter.addValue("releaseDate", movie.getReleaseDate());
         namedParameter.addValue("duration", movie.getDuration());
         namedParameter.addValue("filmmakerId", movie.getFilmmaker().getId());
         namedParameterJdbcTemplate.update(updateQuery, namedParameter);
     }
 
     @Override
-    public void deleteMovie(Long id) throws DataAccessException{
+    public void deleteMovie(Integer id) throws DataAccessException{
         namedParameterJdbcTemplate.update(deleteQuery, new MapSqlParameterSource("id",id));
 
     }

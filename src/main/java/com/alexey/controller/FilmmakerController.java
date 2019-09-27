@@ -30,20 +30,20 @@ public class FilmmakerController {
 
     @GetMapping("/filmmakers/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Filmmaker getFilmmakerById(@PathVariable("id") Long id){
+    public Filmmaker getFilmmakerById(@PathVariable("id") Integer id){
         return filmmakerService.getById(id);
     }
 
     @GetMapping("/filmmakers/{id}/movies")
     @ResponseStatus(HttpStatus.OK)
-    public List<Movie> getFilmmakersMovies(@PathVariable Long id){
+    public List<Movie> getFilmmakersMovies(@PathVariable Integer id){
         return filmmakerService.getById(id).getMovies();
     }
 
     @PostMapping("/filmmakers")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createFilmmaker(@RequestBody Filmmaker filmmaker, UriComponentsBuilder ucBuilder) {
-        Long id = filmmakerService.addFilmmaker(filmmaker);
+        Integer id = filmmakerService.addFilmmaker(filmmaker);
 
         UriComponents uriComponent = ucBuilder.path("/filmmakers/{id}").buildAndExpand(id);
         return ResponseEntity.created(uriComponent.toUri()).build();
@@ -51,7 +51,7 @@ public class FilmmakerController {
 
     @PutMapping("/filmmakers/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateFilmmaker(@PathVariable("id") Long id,@RequestBody Filmmaker filmmaker) {
+    public void updateFilmmaker(@PathVariable("id") Integer id,@RequestBody Filmmaker filmmaker) {
         filmmaker.setId(id);
 
         filmmakerService.updateFilmmaker(filmmaker);
@@ -59,7 +59,7 @@ public class FilmmakerController {
 
     @DeleteMapping("/filmmakers/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteFilmmaker(@PathVariable("id") Long id) {
+    public void deleteFilmmaker(@PathVariable("id") Integer id) {
 
         filmmakerService.removeFilmmaker(id);
     }

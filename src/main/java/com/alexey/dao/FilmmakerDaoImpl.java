@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@PropertySource("classpath:sql.properties")
 public class FilmmakerDaoImpl implements FilmmakerDao {
 
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -48,20 +47,10 @@ public class FilmmakerDaoImpl implements FilmmakerDao {
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
- /*   private RowMapper<Filmmaker> filmmakerWithIgnoredMoviesRowMapper = (resultSet, i) -> new Filmmaker(
-        resultSet.getLong("id"),
-        resultSet.getString("first_name"),
-        resultSet.getString("last_name"),
-        resultSet.getString("country"),
-        resultSet.getDate("date_of_birth"),
-        resultSet.getInt("count")
-    ); */
-
-    //universal thing
     private RowMapper<Filmmaker> filmmakersWithMoviesRowMapper = (resultSet, i) ->{
         int temp = resultSet.getInt("count");
         Filmmaker filmmaker = new Filmmaker(
-            resultSet.getLong("id"),
+            resultSet.getInt("id"),
             resultSet.getString("first_name"),
             resultSet.getString("last_name"),
             resultSet.getString("country"),
@@ -69,61 +58,21 @@ public class FilmmakerDaoImpl implements FilmmakerDao {
             resultSet.getInt("count"),
             new ArrayList<>()
         );
-        if (resultSet.getObject("movie_id", Integer.class)==null)//if temp==0
+        if (resultSet.getObject("movie_id", Integer.class)==null)
             return filmmaker;
         do{
-            temp--;
             filmmaker.getMovies().add(new Movie(
-                    resultSet.getLong("movie_id"),
+                    resultSet.getInt("movie_id"),
                     resultSet.getString("movie_name"),
-                    resultSet.getDate("movie_year"),
+                    resultSet.getDate("movie_release"),
                     resultSet.getInt("movie_duration"),
-                    resultSet.getLong("filmmaker_id"),
+                    resultSet.getInt("filmmaker_id"),
                     resultSet.getString("first_name")+" "+resultSet.getString("last_name")
 
             ));
-        }while(temp>0&&resultSet.next());
+        }while(--temp > 0 && resultSet.next());
         return filmmaker;
     };
-    /*private RowMapper<Movie> movieRowMapper = ((resultSet, i) -> new Movie(
-            resultSet.getLong("id"),
-            resultSet.getString("name"),
-            resultSet.getDate("year"),
-            resultSet.getInt("duration"),
-            resultSet.getString("filmmaker")
-    ));*/
-
-    //for getById()
-    /*private RowMapper<Filmmaker> filmmakerWithMoviesRowMapper = ((resultSet, i) -> {
-       Filmmaker filmmaker = new Filmmaker(
-               resultSet.getLong("id"),
-               resultSet.getString("first_name"),
-               resultSet.getString("last_name"),
-               resultSet.getString("country"),
-               resultSet.getDate("date_of_birth"),
-               resultSet.getInt("count"),
-               new ArrayList<>()
-       );
-       if(resultSet.getObject("movie_id", Long.class)==null)
-           return filmmaker;
-       do {
-           filmmaker.getMovies().add(new Movie(
-                    resultSet.getLong("movie_id"),
-                    resultSet.getString("movie_name"),
-                   resultSet.getDate("movie_year"),
-                   resultSet.getInt("movie_duration"),
-                   resultSet.getLong("filmmaker_id"),
-                   resultSet.getString("first_name")+" "+resultSet.getString("last_name")
-           ));
-       }
-       while(resultSet.next());
-       return filmmaker;
-    });*/
-
-    /*@Override
-    public List<Movie> getHisMovies(Long id) throws DataAccessException {
-        return namedParameterJdbcTemplate.query(hisMoviesQuery, new MapSqlParameterSource("id", id), movieRowMapper);
-    }*/
 
     @Override
     public List<Filmmaker> getAll() throws DataAccessException {
@@ -131,16 +80,16 @@ public class FilmmakerDaoImpl implements FilmmakerDao {
     }
 
     @Override
-    public Filmmaker getById(Long id) throws DataAccessException {
+    public Filmmaker getById(Integer id) throws DataAccessException {
         return namedParameterJdbcTemplate.queryForObject(findByIdQuery, new MapSqlParameterSource("id", id), filmmakersWithMoviesRowMapper);
     }
 
     @Override
-    public Long insertFilmmaker(Filmmaker filmmaker) throws DataAccessException {
+    public Integer insertFilmmaker(Filmmaker filmmaker) throws DataAccessException {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         SqlParameterSource namedParameter = new BeanPropertySqlParameterSource(filmmaker);
         namedParameterJdbcTemplate.update(insertQuery, namedParameter, keyHolder, new String[]{"id"});
-        return keyHolder.getKey().longValue();
+        return keyHolder.getKey().intValue();
     }
 
     @Override
@@ -150,7 +99,7 @@ public class FilmmakerDaoImpl implements FilmmakerDao {
     }
 
     @Override
-    public void deleteFilmmaker(Long id) throws DataAccessException {
+    public void deleteFilmmaker(Integer id) throws DataAccessException {
         SqlParameterSource namedParameter = new MapSqlParameterSource("id", id);
         namedParameterJdbcTemplate.update(deleteQuery, namedParameter);
     }

@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface FilmmakerService {
     List<Filmmaker> getAll();
-    Filmmaker getById(Long id);
-    Long addFilmmaker(Filmmaker filmmaker);
+    Filmmaker getById(Integer id);
+    Integer addFilmmaker(Filmmaker filmmaker);
     void updateFilmmaker(Filmmaker filmmaker);
-    void removeFilmmaker(Long id);
+    void removeFilmmaker(Integer id);
 }

@@ -3,15 +3,13 @@ package com.alexey.model;
 import com.alexey.dto.FilmmakerDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.annotation.PostConstruct;
-import java.beans.Transient;
 import java.util.Date;
 
 public class Movie {
-    private Long id;
+    private Integer id;
     private String name;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone="Europe/Moscow")
-    private Date year;
+    private Date releaseDate;
     private Integer duration;
     private FilmmakerDto filmmaker;
 
@@ -19,28 +17,28 @@ public class Movie {
 
     };
     //When we get from DB
-    public Movie(Long id, String name, Date year, Integer duration,Long filmmakerId, String filmmaker){
+    public Movie(Integer id, String name, Date releaseDate, Integer duration, Integer filmmakerId, String filmmaker){
         this.id=id;
         this.name=name;
-        this.year=year;
+        this.releaseDate = releaseDate;
         this.duration=duration;
         this.filmmaker=new FilmmakerDto(filmmakerId, filmmaker);
     }
 
     //When we create from request, don't forget that we get filmmakerId from filmmakerDto!!
-    public Movie(String name, Date year, Integer duration, Long filmmakerId){
+    public Movie(String name, Date releaseDate, Integer duration, Integer filmmakerId){
         this.name=name;
-        this.year=year;
+        this.releaseDate = releaseDate;
         this.duration=duration;
         new FilmmakerDto(filmmakerId);
 
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -52,12 +50,12 @@ public class Movie {
         this.name = name;
     }
 
-    public Date getYear() {
-        return year;
+    public Date getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setYear(Date year) {
-        this.year = year;
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public Integer getDuration() {
@@ -83,7 +81,7 @@ public class Movie {
         return "Movie{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", year=" + year +
+                ", year=" + releaseDate +
                 ", duration=" + duration +
                 ", filmmakerId=" + filmmaker.getId() +
                 '}';

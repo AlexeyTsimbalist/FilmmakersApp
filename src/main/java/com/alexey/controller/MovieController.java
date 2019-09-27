@@ -31,20 +31,20 @@ public class MovieController {
 
     @GetMapping("/movies/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Movie getMovieById(@PathVariable Long id){
+    public Movie getMovieById(@PathVariable Integer id){
         return movieService.getById(id);
     }
 
     @GetMapping("/movies/byfilmmaker/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Movie> getMoviesByFilmmaker(@PathVariable Long id){
+    public List<Movie> getMoviesByFilmmaker(@PathVariable Integer id){
         return movieService.getMoviesByFilmmaker(id);
     }
 
     @PostMapping("/movies")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> createMovie(@RequestBody Movie movie, UriComponentsBuilder ucBuilder){
-        Long id = movieService.addMovie(movie);
+        Integer id = movieService.addMovie(movie);
 
         UriComponents uriComponent = ucBuilder.path("/movies/{id}").buildAndExpand(id);
         return ResponseEntity.created(uriComponent.toUri()).build();
@@ -52,14 +52,14 @@ public class MovieController {
 
     @PutMapping("/movies/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateMovie(@PathVariable Long id, @RequestBody Movie movie){
+    public void updateMovie(@PathVariable Integer id, @RequestBody Movie movie){
         movie.setId(id);
         movieService.updateMovie(movie);
     }
 
     @DeleteMapping("/movies/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteMovie(@PathVariable Long id){
+    public void deleteMovie(@PathVariable Integer id){
         movieService.removeMovie(id);
     }
 

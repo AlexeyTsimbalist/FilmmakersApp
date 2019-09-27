@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Filmmaker {
 
-    private Long id;
+    private Integer id;
     private String firstName;
     private String lastName;
     private String country;
@@ -22,7 +22,7 @@ public class Filmmaker {
 
 
     //for getById()
-    public Filmmaker(Long id, String firstName, String lastName, String country, Date dateOfBirth,Integer countOfMovies, List<Movie> movies){
+    public Filmmaker(Integer id, String firstName, String lastName, String country, Date dateOfBirth,Integer countOfMovies, List<Movie> movies){
         this.id=id;
         this.firstName=firstName;
         this.lastName=lastName;
@@ -32,7 +32,7 @@ public class Filmmaker {
         this.movies=movies;
     }
     //for getAll()
-    public Filmmaker(Long id, String firstName, String lastName, String country, Date dateOfBirth, Integer countOfMovies){
+    public Filmmaker(Integer id, String firstName, String lastName, String country, Date dateOfBirth, Integer countOfMovies){
         this.id=id;
         this.firstName=firstName;
         this.lastName=lastName;
@@ -55,11 +55,11 @@ public class Filmmaker {
         this.country=country;
         this.dateOfBirth= new Date();
     }
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -21,10 +21,10 @@ public class MovieServiceImpl implements MovieService {
     public void checkMovie(Movie movie){
         if (movie.getName()==null)
             throw new OperationFailedException("Movie's name should not be null");
-        if (movie.getYear()==null)
-            throw new OperationFailedException("Movie's year should not be null");
+        if (movie.getReleaseDate()==null)
+            throw new OperationFailedException("Movie's release date should not be null");
         if (movie.getDuration()==null) {
-            throw new OperationFailedException("Movies' duration should not be null");
+            throw new OperationFailedException("Movie's duration should not be null");
         }
         if (movie.getFilmmaker().getId()==null)
             throw new OperationFailedException("Movie's filmmaker's id should not be null");
@@ -36,21 +36,21 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie getById(Long id) {
+    public Movie getById(Integer id) {
         if(id == null || id <= 0)
             throw new OperationFailedException("Movie's id should be more than 0 or not a null");
         return movieDao.getById(id);
     }
 
     @Override
-    public List<Movie> getMoviesByFilmmaker(Long id) {
+    public List<Movie> getMoviesByFilmmaker(Integer id) {
         if(id == null || id <= 0)
             throw new OperationFailedException("Filmmaker's id should be more than 0 or not a null");
         return movieDao.getMoviesByFilmmaker(id);
     }
 
     @Override
-    public Long addMovie(Movie movie) {
+    public Integer addMovie(Movie movie) {
         checkMovie(movie);
         return movieDao.insertMovie(movie);
     }
@@ -62,7 +62,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void removeMovie(Long id) {
+    public void removeMovie(Integer id) {
         if (id == null || id <=0)
             throw new OperationFailedException("Movie's id should be more than 0 or not a null");
         movieDao.deleteMovie(id);

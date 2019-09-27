@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface MovieService {
     List<Movie> getAll();
-    Movie getById(Long id);
-    List<Movie> getMoviesByFilmmaker(Long id);
-    Long addMovie(Movie movie);
+    Movie getById(Integer id);
+    List<Movie> getMoviesByFilmmaker(Integer id);
+    Integer addMovie(Movie movie);
     void updateMovie(Movie movie);
-    void removeMovie(Long id);
+    void removeMovie(Integer id);
 }

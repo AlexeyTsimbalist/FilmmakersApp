@@ -38,14 +38,14 @@ public class FilmmakerServiceImpl implements FilmmakerService{
     }
 
     @Override
-    public Filmmaker getById(Long id) {
+    public Filmmaker getById(Integer id) {
         if(id == null || id <=0)
             throw new OperationFailedException("Filmmaker's id should be more than 0 or not a null");
         return filmmakerDao.getById(id);
     }
 
     @Override
-    public Long addFilmmaker(Filmmaker filmmaker) {
+    public Integer addFilmmaker(Filmmaker filmmaker) {
         checkFilmmaker(filmmaker);
         return filmmakerDao.insertFilmmaker(filmmaker);
     }
@@ -60,7 +60,7 @@ public class FilmmakerServiceImpl implements FilmmakerService{
     }
 
     @Override
-    public void removeFilmmaker(Long id) {
+    public void removeFilmmaker(Integer id) {
         if (id == null || id<=0)
             throw new OperationFailedException("Filmmaker's id should be more than 0 or not a null");
         filmmakerDao.deleteFilmmaker(id);

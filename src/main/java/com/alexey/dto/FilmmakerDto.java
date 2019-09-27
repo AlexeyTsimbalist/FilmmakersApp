@@ -2,17 +2,17 @@ package com.alexey.dto;
 
 
 public class FilmmakerDto {
-    private Long id;
+    private Integer id;
     private String name;
 
     public FilmmakerDto(){}
     //when we create from request
-    public FilmmakerDto(Long id){
+    public FilmmakerDto(Integer id){
         this.id=id;
     }
 
     //when we get from DB
-    public FilmmakerDto(Long id, String name){
+    public FilmmakerDto(Integer id, String name){
         this.id=id;
         this.name =name;
     }
@@ -25,11 +25,11 @@ public class FilmmakerDto {
         this.name = name;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

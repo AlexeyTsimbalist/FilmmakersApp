@@ -4,11 +4,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.init.DatabasePopulator;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+
 import javax.sql.DataSource;
 
 @Configuration
-@PropertySource ("classpath:database.properties")
+@PropertySources({@PropertySource("classpath:database.properties"),
+                  @PropertySource("classpath:sql.properties")})
 public class JdbcConfiguration {
 
     @Value("${database.driver}")
@@ -31,6 +39,14 @@ public class JdbcConfiguration {
         dataSource.setUrl(url);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
+
+        Resource createScript = new ClassPathResource("create-tables.sql");
+        DatabasePopulator databasePopulator = new ResourceDatabasePopulator(createScript);
+        DatabasePopulatorUtils.execute(databasePopulator, dataSource);
+
+        Resource insertScript = new ClassPathResource("insert-values.sql");
+        databasePopulator = new ResourceDatabasePopulator(insertScript);
+        DatabasePopulatorUtils.execute(databasePopulator, dataSource);
 
         return dataSource;
     }
