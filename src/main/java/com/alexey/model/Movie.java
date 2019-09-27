@@ -3,16 +3,21 @@ package com.alexey.model;
 import com.alexey.dto.FilmmakerDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.annotation.PostConstruct;
+import java.beans.Transient;
 import java.util.Date;
 
 public class Movie {
     private Long id;
     private String name;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy", timezone="Europe/Moscow")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone="Europe/Moscow")
     private Date year;
     private Integer duration;
     private FilmmakerDto filmmaker;
 
+    public Movie(){
+
+    };
     //When we get from DB
     public Movie(Long id, String name, Date year, Integer duration,Long filmmakerId, String filmmaker){
         this.id=id;
@@ -22,7 +27,7 @@ public class Movie {
         this.filmmaker=new FilmmakerDto(filmmakerId, filmmaker);
     }
 
-    //When we create from request
+    //When we create from request, don't forget that we get filmmakerId from filmmakerDto!!
     public Movie(String name, Date year, Integer duration, Long filmmakerId){
         this.name=name;
         this.year=year;
@@ -64,12 +69,14 @@ public class Movie {
     }
 
     public FilmmakerDto getFilmmaker() {
+
         return filmmaker;
     }
 
     public void setFilmmaker(FilmmakerDto filmmaker) {
         this.filmmaker = filmmaker;
     }
+
 
     @Override
     public String toString() {
@@ -78,6 +85,7 @@ public class Movie {
                 ", name='" + name + '\'' +
                 ", year=" + year +
                 ", duration=" + duration +
+                ", filmmakerId=" + filmmaker.getId() +
                 '}';
     }
 }

@@ -51,7 +51,7 @@ public class MovieDaoImpl implements MovieDao {
             resultSet.getDate("year"),
             resultSet.getInt("duration"),
             resultSet.getLong("filmmaker_id"),
-            resultSet.getString("first_name")+" "+resultSet.getString("last_name")
+            resultSet.getString("filmmaker_name")
     ));
 
 
@@ -73,21 +73,29 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public Long insertMovie(Movie movie) throws DataAccessException{
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        SqlParameterSource namedParameter = new BeanPropertySqlParameterSource(movie);
+        MapSqlParameterSource namedParameter = new MapSqlParameterSource();
+        namedParameter.addValue("name", movie.getName());
+        namedParameter.addValue("year", movie.getYear());
+        namedParameter.addValue("duration", movie.getDuration());
+        namedParameter.addValue("filmmakerId", movie.getFilmmaker().getId());
         namedParameterJdbcTemplate.update(insertQuery, namedParameter, keyHolder, new String[] {"id"});
         return keyHolder.getKey().longValue();
     }
 
     @Override
     public void updateMovie(Movie movie) throws DataAccessException{
-        SqlParameterSource namedParameter = new BeanPropertySqlParameterSource(movie);
+        MapSqlParameterSource namedParameter = new MapSqlParameterSource();
+        namedParameter.addValue("id", movie.getId());
+        namedParameter.addValue("name", movie.getName());
+        namedParameter.addValue("year", movie.getYear());
+        namedParameter.addValue("duration", movie.getDuration());
+        namedParameter.addValue("filmmakerId", movie.getFilmmaker().getId());
         namedParameterJdbcTemplate.update(updateQuery, namedParameter);
     }
 
     @Override
-    public Long deleteMovie(Long id) throws DataAccessException{
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        namedParameterJdbcTemplate.update(deleteQuery, new MapSqlParameterSource("id",id), keyHolder, new String[] {"id"});
-        return keyHolder.getKey().longValue();
+    public void deleteMovie(Long id) throws DataAccessException{
+        namedParameterJdbcTemplate.update(deleteQuery, new MapSqlParameterSource("id",id));
+
     }
 }

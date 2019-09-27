@@ -2,7 +2,6 @@ package com.alexey.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.beans.Transient;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +16,9 @@ public class Filmmaker {
     private Integer countOfMovies;
     private List<Movie> movies;
 
-    public Filmmaker() {}
+    public Filmmaker() {
+
+    }
 
 
     //for getById()

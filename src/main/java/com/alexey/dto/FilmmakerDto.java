@@ -5,6 +5,7 @@ public class FilmmakerDto {
     private Long id;
     private String name;
 
+    public FilmmakerDto(){}
     //when we create from request
     public FilmmakerDto(Long id){
         this.id=id;

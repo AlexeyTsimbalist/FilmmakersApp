@@ -150,10 +150,8 @@ public class FilmmakerDaoImpl implements FilmmakerDao {
     }
 
     @Override
-    public Long deleteFilmmaker(Long id) throws DataAccessException {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
+    public void deleteFilmmaker(Long id) throws DataAccessException {
         SqlParameterSource namedParameter = new MapSqlParameterSource("id", id);
-        namedParameterJdbcTemplate.update(deleteQuery, namedParameter, keyHolder, new String[]{"id"});
-        return keyHolder.getKey().longValue();
+        namedParameterJdbcTemplate.update(deleteQuery, namedParameter);
     }
 }

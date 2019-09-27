@@ -38,7 +38,7 @@ public class MovieController {
     @GetMapping("/movies/byfilmmaker/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<Movie> getMoviesByFilmmaker(@PathVariable Long id){
-        return movieService.getMovieByFilmmaker(id);
+        return movieService.getMoviesByFilmmaker(id);
     }
 
     @PostMapping("/movies")
