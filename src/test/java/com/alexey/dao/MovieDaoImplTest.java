@@ -49,6 +49,7 @@ public class MovieDaoImplTest {
 
         Integer movieId = movieDao.insertMovie(movie);
         Movie movieFromDB = movieDao.getById(movieId);
+        movieDao.deleteMovie(movieId);
 
         Assertions.assertEquals("Green book", movieFromDB.getName());
     }
@@ -68,7 +69,10 @@ public class MovieDaoImplTest {
 
     @Test
     public void deleteMovieTest(){
-        movieDao.deleteMovie(1);
-        Assertions.assertThrows(EmptyResultDataAccessException.class, ()->movieDao.getById(1));
+        Movie movie = new Movie("Green book", new Date(),
+                120, 1);
+        Integer movieId = movieDao.insertMovie(movie);
+        movieDao.deleteMovie(movieId);
+        Assertions.assertThrows(EmptyResultDataAccessException.class, ()->movieDao.getById(movieId));
     }
 }

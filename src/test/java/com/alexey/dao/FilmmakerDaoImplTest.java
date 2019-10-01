@@ -48,6 +48,7 @@ public class FilmmakerDaoImplTest {
         Integer filmmakerId = filmmakerDao.insertFilmmaker(filmmaker);
 
         filmmaker = filmmakerDao.getById(filmmakerId);
+        filmmakerDao.deleteFilmmaker(filmmakerId);
         Assertions.assertEquals("Alexey", filmmaker.getFirstName());
 
     }
@@ -66,8 +67,10 @@ public class FilmmakerDaoImplTest {
 
     @Test
     void deleteFilmmakerTest(){
-        filmmakerDao.deleteFilmmaker(1);
-        Assertions.assertThrows(EmptyResultDataAccessException.class, ()->filmmakerDao.getById(1));
+        Filmmaker filmmaker = new Filmmaker("Alexey", "Tsimbalist", "Belarus", new Date());
+        Integer filmmakerId = filmmakerDao.insertFilmmaker(filmmaker);
+        filmmakerDao.deleteFilmmaker(filmmakerId);
+        Assertions.assertThrows(EmptyResultDataAccessException.class, ()->filmmakerDao.getById(filmmakerId));
 
     }
 }
