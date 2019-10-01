@@ -25,12 +25,11 @@ public class Movie {
         this.filmmaker=new FilmmakerDto(filmmakerId, filmmaker);
     }
 
-    //When we create from request, don't forget that we get filmmakerId from filmmakerDto!!
     public Movie(String name, Date releaseDate, Integer duration, Integer filmmakerId){
         this.name=name;
         this.releaseDate = releaseDate;
         this.duration=duration;
-        new FilmmakerDto(filmmakerId);
+        this.filmmaker = new FilmmakerDto(filmmakerId);
 
     }
 
